@@ -19,7 +19,7 @@ This Streamlit application allows users to upload and compare two documents, hig
 ## 📦 Installation
 ### 1️⃣ Clone the Repository
 ```sh
-$ git clone https://github.com/yourusername/document-comparison-chatbot.git
+$ git clone https://github.com/Apsingh2001/Document-Comparision-System-and-Chatbot-using-RAG
 $ cd document-comparison-chatbot
 ```
 ### 2️⃣ Install Dependencies
