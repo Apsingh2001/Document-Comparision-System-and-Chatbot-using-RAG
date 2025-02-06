@@ -2,6 +2,7 @@ import streamlit as st
 import fitz
 import docx
 from io import BytesIO
+import io
 import pytesseract
 from pdf2image import convert_from_path
 from langchain.embeddings import HuggingFaceEmbeddings
@@ -174,6 +175,25 @@ def main():
                 comparison_result = extract_differences(doc1_text, doc2_text)
 
                 st.markdown(comparison_result, unsafe_allow_html=True)
+
+                # Convert HTML formatted text to plain text for saving
+                plain_text_result = comparison_result.replace('<span style="color: yellow; text-decoration: line-through;">', '[REMOVED] ')\
+                                                    .replace('<span style="color: lightgreen; font-weight: bold;">', '[REPLACED] ')\
+                                                    .replace('<span style="color: blue; font-weight: bold;">', '[ADDED] ')\
+                                                    .replace('<span style="color: red; text-decoration: line-through;">', '[DELETED] ')\
+                                                    .replace('</span>', '')
+
+
+                # Create a text stream for downloading
+                text_stream = io.StringIO(plain_text_result)
+
+                # Provide download button
+                st.download_button(
+                    label="📥 Download Comparison Result",
+                    data=text_stream.getvalue(),
+                    file_name="comparison_result.txt",
+                    mime="text/plain"
+                )
                 
 if __name__ == "__main__":
     main()
